@@ -1,0 +1,27 @@
+{
+  "name": "co-traveller",
+  "version": "1.0.0",
+  "description": "Helps to travel with new friends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ABVijayanadha/COTRAVELLER.git"
+  },
+  "keywords": [
+    "travel",
+    "friend",
+    "co",
+    "pal",
+    "journey",
+    "holiday"
+  ],
+  "author": "arun & anuj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ABVijayanadha/COTRAVELLER/issues"
+  },
+  "homepage": "https://github.com/ABVijayanadha/COTRAVELLER#readme"
+}
