@@ -1,10 +1,10 @@
 {
-  "name": "COTRAVELLER",
-  "version": "0.0.0",
-  "description": "Helps to travel with new friends",
-  "private": true,
+  "name": "co-traveller",
+  "version": "1.0.0",
+  "description": "Make all travels with new friends",
+  "main": "server.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -12,26 +12,24 @@
   },
   "keywords": [
     "travel",
+    "buddy",
     "friend",
-    "co",
-    "pal",
+    "foe",
     "journey",
-    "holiday"
+    "happy"
   ],
-  "author": "arun & anuj",
+  "author": "anuj & arun",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ABVijayanadha/COTRAVELLER/issues"
   },
   "homepage": "https://github.com/ABVijayanadha/COTRAVELLER#readme",
   "dependencies": {
-    "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.13.4",
-    "jsonwebtoken": "^7.1.9",
-    "morgan": "~1.7.0",
-    "passport": "^0.3.2",
-    "serve-favicon": "~2.3.0"
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^7.3.0",
+    "mongoose": "^4.9.2",
+    "morgan": "^1.8.1",
+    "passport": "^0.3.2"
   }
 }
