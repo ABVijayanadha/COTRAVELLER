@@ -1,7 +1,24 @@
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	crypto = require('crypto');
 
-module.exports = mongoose.model('User',new Schema({
-	name :String,
-	password:String
+var UserSchema = mongoose.model('User',new Schema({
+	firstName :{
+		type:String,
+		required:true
+	},
+	lastName:{
+		type:String
+	},
+	email:  {
+        type: String,
+        required: true,
+        unique: true
+    },
+	hashed_password: String,
+    provider: String,
+    salt: String,
 }));
+
+
+ module.exports = UserSchema;

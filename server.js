@@ -1,7 +1,8 @@
 var express = require('express'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
-	jwt    = require('jsonwebtoken');
+	jwt    = require('jsonwebtoken'),
+	promises =require('bluebird');
 
 
 var app = express();
@@ -12,6 +13,7 @@ var User   = require('./app/models/user');
 
 var port = process.env.PORT || 8080;
 
+mongoose.Promise = promises;
 mongoose.connect(config.database);
 app.set('superSecret',config.secret);
 
