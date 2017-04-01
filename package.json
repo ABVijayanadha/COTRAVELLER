@@ -25,12 +25,12 @@
   },
   "homepage": "https://github.com/ABVijayanadha/COTRAVELLER#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
-    "crypto": "0.0.3",
     "express": "^4.15.2",
     "jsonwebtoken": "^7.3.0",
-    "mongoose": "^4.9.2",
+    "mongoose": "4.6.8",
     "morgan": "^1.8.1",
     "passport": "^0.3.2"
   }
