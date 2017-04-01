@@ -18,7 +18,8 @@ app.set('superSecret',config.secret);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// var userController = require('./app/controller/users.js');
+// app.use('/api/user',userController.user);
 require('./config/routes')(app);
 
 app.get('/', function(req, res) {
@@ -26,6 +27,11 @@ app.get('/', function(req, res) {
 });
 
 
-app.listen(port);
-console.log('Magic happens at http://localhost:' + port);
+app.listen(port,function(err){	
+	if(err){
+		console.log(err);
+	}else{
+		console.log('Let go to http://localhost:' + port);
+	}
+});
 
