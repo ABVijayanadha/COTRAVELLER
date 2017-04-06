@@ -2,7 +2,8 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
 	jwt    = require('jsonwebtoken'),
-	promises =require('bluebird');
+	promises =require('bluebird'),
+	passport = require('passport');
 
 
 var app = express();
@@ -11,16 +12,21 @@ var config = require('./config/config');
 var User   = require('./app/models/user');
 
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3030;
 
 mongoose.Promise = promises;
-mongoose.connect(config.database);
 app.set('superSecret',config.secret);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// app.use(passport.initialize()); 
+
+mongoose.connect(config.database);
+
+// require('./config/passport')(passport); 
 
 require('./config/routes')(app);
+
 
 app.get('/', function(req, res) {
     res.send('Whole apis running in this localhost' + port + '/api');
