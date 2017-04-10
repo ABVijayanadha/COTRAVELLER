@@ -3,7 +3,6 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User');
 
-
 router.get('/',function(req,res){
 	findAllUsers(function(err,users){
 		if(err){
@@ -14,7 +13,7 @@ router.get('/',function(req,res){
 });
 
 router.get('/:userId',function(req,res){
-	var id = parseInt(req.params.userId);
+	var id = mongoose.Types.ObjectId(req.params.userId);
 	getUserById(id,function(err,user){
 		if(err){
 			res.send(err);
@@ -36,6 +35,19 @@ router.post('/',function(req,res){
 });
 
 
+router.put('/:userId',function(req,res){
+	var user = req.body;
+	var id = mongoose.Types.ObjectId(req.params.userId);
+	updateUser(id,user,function(err, user){
+		if(err){
+			res.send(err);
+		}else{
+			res.send(user);
+		}
+	});
+});
+
+
 module.exports = router;
 
 
@@ -50,14 +62,13 @@ function saveUser(data,callback) {
 }
 
 function getUserById(id,callback){
-	User.findOne({_id: id})
-		.exec(function(err, user) {
+	User.findOne({_id: id},function(err, user) {
 			if (err) callback(err);
-			else if (!err && !user) 
+			else if (!err && !user)
 				callback('No User Found');
  			else
- 				callback(null,err);
-        });
+ 				callback(user,err);
+  });
 }
 
 
@@ -66,6 +77,18 @@ function findAllUsers(callback) {
 	getUser.then(function(users){
 		callback(null,users);
 	}).catch(function(err){
-		callback(err,[]);   
+		callback(err,[]);
 	});
+}
+
+
+function updateUser(id, data, callback) {
+	var query = {_id: id};
+	var body = data;
+	var updateUserQuery = User.findOneAndUpdate(query, body, {new: true});
+	updateUserQuery.then(function(users){
+		callback(null, users)
+	}).catch(function(err){
+		callback(err,[]);
+	})
 }
