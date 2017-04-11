@@ -32,7 +32,7 @@ router.post('/',function(req,res){
 		res.send('Success');
 	}).catch(function(err){
 		res.send(err);
-	})
+	});
 });
 
 

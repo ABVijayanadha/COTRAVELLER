@@ -19,11 +19,11 @@ app.set('superSecret',config.secret);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(passport.initialize()); 
+app.use(passport.initialize()); 
 
 mongoose.connect(config.database);
 
-// require('./config/passport')(passport); 
+require('./config/passport')(passport); 
 
 require('./config/routes')(app);
 

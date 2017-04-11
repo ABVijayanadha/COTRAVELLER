@@ -3,6 +3,11 @@ var mongoose = require('mongoose'),
 	Promise = require('bluebird');
 
 
+class userService{
+	
+}
+
+
 
 var userService = function(){};
 
