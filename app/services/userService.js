@@ -2,13 +2,6 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Promise = require('bluebird');
 
-
-class userService{
-	
-}
-
-
-
 var userService = function(){};
 
 userService.prototype.save = function(user) {
@@ -47,6 +40,30 @@ userService.prototype.getById = function(id) {
 	});
 };
 
+userService.prototype.update = function(id,data) {
+	return new Promise(function(resolve,reject){
+		updateUser(id, data, function(error,user){
+			if(error){
+				reject(error);
+			}else{
+				resolve(user);
+			}
+		}); 
+	});
+};
+
+userService.prototype.remove = function(id) {
+	return new Promise(function(resolve,reject){
+		deleteUser(id,function(error,user){
+			if(error){
+				reject(error);
+			}else{
+				resolve(user);
+			}
+		})
+	});
+};
+
 
 module.exports=userService;
 
@@ -69,9 +86,10 @@ function getUserById(id,callback){
 			else if (!err && !user) 
 				callback('No User Found');
  			else
- 				callback(null,err);
+ 				callback(null,user);
         });
 }
+
 
 
 function findAllUsers(callback) {
@@ -81,4 +99,19 @@ function findAllUsers(callback) {
 	}).catch(function(err){
 		callback(err,[]);   
 	});
+}
+
+function updateUser(id, data, callback) {
+	var query = {_id: id};
+	var body = data;
+	var updateUserQuery = User.findOneAndUpdate(query, body, {new: true});
+	updateUserQuery.then(function(users){
+		callback(null, users)
+	}).catch(function(err){
+		callback(err,[]);
+	})
+}
+
+function deleteUser(id,callback) {
+	console.log('pending...........');
 }

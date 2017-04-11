@@ -2,7 +2,7 @@
  	extractJwt = require('passport-jwt').ExtractJwt;
  
  var config = require('./config.js'),
- 	user =require('./../aap/services/userService.js');
+ 	user =require('./../app/services/userService.js');
 
 module.exports = function(passport) {
 	var opt ={};

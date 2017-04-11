@@ -23,7 +23,7 @@ app.use(passport.initialize());
 
 mongoose.connect(config.database);
 
-require('./config/passport')(passport); 
+// require('./config/passport')(passport); 
 
 require('./config/routes')(app);
 

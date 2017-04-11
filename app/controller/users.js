@@ -4,10 +4,7 @@ var express = require('express'),
 	User = mongoose.model('User');
 
 var UserService = require('./../services/userService.js');
-
-
 var userService = new UserService();
-
 
 router.get('/',function(req,res){
 	userService.getAll().then(function(users){
@@ -18,13 +15,15 @@ router.get('/',function(req,res){
 });
 
 router.get('/:userId',function(req,res){
-	var id = parseInt(req.params.userId);
-	userService.getById().then(function(user){
+	var id = mongoose.Types.ObjectId(req.params.userId);
+	userService.getById(id).then(function(user){
 		res.send(user);
 	}).catch(function(error){
 		res.send(error);
 	});
+		
 });
+
 
 router.post('/',function(req,res){
 	var user = req.body;
@@ -32,6 +31,26 @@ router.post('/',function(req,res){
 		res.send('Success');
 	}).catch(function(err){
 		res.send(err);
+	});
+});
+
+
+router.put('/:userId',function(req,res){
+	var user = req.body;
+	var id = mongoose.Types.ObjectId(req.params.userId);
+	userService.update(id,user).then(function(user){
+		res.send(user);
+	}).catch(function(error){
+		res.send(error);
+	});
+});
+
+router.delete('/:userId',function(req,res){
+	var id = mongoose.Types.ObjectId(req.params.userId);
+	userService.remove(id).then(function(user){
+		res.send(user);
+	}).catch(function(error){
+		res.send(error);
 	});
 });
 
