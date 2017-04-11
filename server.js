@@ -3,7 +3,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	jwt    = require('jsonwebtoken'),
 	promises =require('bluebird'),
-	passport = require('passport');
+	passport = require('passport'),
+	morgan = require('morgan');
 
 
 var app = express();
@@ -15,17 +16,18 @@ var User   = require('./app/models/user');
 var port = process.env.PORT || 3030;
 
 mongoose.Promise = promises;
-app.set('superSecret',config.secret);
+// app.set('superSecret',config.secret);
 
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize()); 
 
 mongoose.connect(config.database);
 
-// require('./config/passport')(passport); 
+require('./config/passport')(passport); 
 
-require('./config/routes')(app);
+require('./config/routes')(app,passport);
 
 
 app.get('/', function(req, res) {

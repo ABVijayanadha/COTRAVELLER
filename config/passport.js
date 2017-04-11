@@ -9,7 +9,7 @@ module.exports = function(passport) {
 	opt.jwtFromRequest = extractJwt.fromAuthHeader();
 	opt.secretOrKey = config.secret;
 
-	passport.use(jwtStartegy(opt,function(jwt_payload,done){
+	var strategy = new jwtStartegy(opt,function(jwt_payload,done){
 		user.getById(jwt_payload.id).then(function(user){
 			if(user)
 				done(null,user);
@@ -18,7 +18,9 @@ module.exports = function(passport) {
 		}).catch(function(error){
 			done(error,false);
 		});
-	}));
+	});
+
+	passport.use(strategy);
 }
 
 
