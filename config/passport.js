@@ -2,7 +2,8 @@
  	extractJwt = require('passport-jwt').ExtractJwt;
  
  var config = require('./config.js'),
- 	user =require('./../app/services/userService.js');
+ 	UserService =require('./../app/services/userService.js'),
+ 	userService = new UserService();
 
 module.exports = function(passport) {
 	var opt ={};
@@ -10,7 +11,7 @@ module.exports = function(passport) {
 	opt.secretOrKey = config.secret;
 
 	var strategy = new jwtStartegy(opt,function(jwt_payload,done){
-		user.getById(jwt_payload.id).then(function(user){
+		userService.getById(jwt_payload.id).then(function(user){
 			if(user)
 				done(null,user);
 			else

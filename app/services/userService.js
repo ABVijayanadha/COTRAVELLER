@@ -52,6 +52,18 @@ userService.prototype.update = function(id,data) {
 	});
 };
 
+userService.prototype.getUserByEmail = function(email) {
+	return new Promise(function(resolve,reject){
+		getEmail(email, function(error,user){
+			if(error){
+				reject(error);
+			}else{
+				resolve(user);
+			}
+		}); 
+	});
+};
+
 userService.prototype.remove = function(id) {
 	return new Promise(function(resolve,reject){
 		deleteUser(id,function(error,user){
@@ -72,8 +84,8 @@ module.exports=userService;
 function saveUser(data,callback) {
 	var user = new User(data);
 	user.save()
-		.then(function(){
-			callback();
+		.then(function(user){
+			callback(user);
 		}).catch(function(err){
 			callback(err);
 		});
@@ -90,6 +102,16 @@ function getUserById(id,callback){
         });
 }
 
+function getEmail(email,callback) {
+	User.findOne({email: email})
+		.exec(function(err, user) {
+			if (err) callback(err);
+			else if (!err && !user) 
+				callback('No User Found');
+ 			else
+ 				callback(null,user);
+        });
+}
 
 
 function findAllUsers(callback) {
