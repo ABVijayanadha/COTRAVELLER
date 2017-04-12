@@ -85,7 +85,7 @@ function saveUser(data,callback) {
 	var user = new User(data);
 	user.save()
 		.then(function(user){
-			callback(user);
+			callback(null,user);
 		}).catch(function(err){
 			callback(err);
 		});
