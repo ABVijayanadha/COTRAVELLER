@@ -13,7 +13,8 @@ file and function to sets the file name
 var storage = multer.diskStorage({
   destination: 'uploads/profile-images',
   filename: function (req, file, cb) {
-    cb(null, file.fieldname +'-'+'.jpg');
+		/*Add user id instead of fieldname so that there will be one file per user*/
+    cb(null, file.fieldname +'.jpg');
   }
 });
 
@@ -62,13 +63,15 @@ router.post('/profile',function(req,res){
 					message:"No file provided"
 				});
 			} else{
-				res.json({
-					status: 3,
-					message:"Image uploaded successfully!",
-					imageURL: req.file.filename
+				userService.getFileUploadURI(req).then(function(fullURL){
+					res.json({
+						status: 3,
+						message:"Image uploaded successfully!",
+						imageURL: fullURL
+					});
 				});
 			}
-
+			
 		}
 
   })

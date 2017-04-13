@@ -1,6 +1,9 @@
-var mongoose = require('mongoose'), 
+var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
+	url = require('url'),
 	Promise = require('bluebird');
+
+var config = require('./../../config/config');
 
 var userService = function(){};
 
@@ -48,7 +51,7 @@ userService.prototype.update = function(id,data) {
 			}else{
 				resolve(user);
 			}
-		}); 
+		});
 	});
 };
 
@@ -60,7 +63,7 @@ userService.prototype.getUserByEmail = function(email) {
 			}else{
 				resolve(user);
 			}
-		}); 
+		});
 	});
 };
 
@@ -75,6 +78,22 @@ userService.prototype.remove = function(id) {
 		})
 	});
 };
+
+userService.prototype.getFileUploadURI = function(req){
+	return new Promise(function(resolve,reject){
+		var fullURL = url.format({
+			protocol: req.protocol,
+			host: req.get('host'),
+			pathname: config.uploadURL + req.file.filename
+		});
+
+		if(fullURL){
+			resolve(fullURL)
+		} else{
+			reject('');
+		}
+	});
+}
 
 
 module.exports=userService;
@@ -95,7 +114,7 @@ function getUserById(id,callback){
 	User.findOne({_id: id})
 		.exec(function(err, user) {
 			if (err) callback(err);
-			else if (!err && !user) 
+			else if (!err && !user)
 				callback('No User Found');
  			else
  				callback(null,user);
@@ -106,7 +125,7 @@ function getEmail(email,callback) {
 	User.findOne({email: email})
 		.exec(function(err, user) {
 			if (err) callback(err);
-			else if (!err && !user) 
+			else if (!err && !user)
 				callback('No User Found');
  			else
  				callback(null,user);
@@ -119,7 +138,7 @@ function findAllUsers(callback) {
 	getUser.then(function(users){
 		callback(null,users);
 	}).catch(function(err){
-		callback(err,[]);   
+		callback(err,[]);
 	});
 }
 

@@ -11,7 +11,7 @@ var express = require('express'),
 var app = express();
 var config = require('./config/config');
 var User   = require('./app/models/user');
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 var port = process.env.PORT || 3030;
 
 mongoose.Promise = promises;
