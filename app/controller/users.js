@@ -13,8 +13,9 @@ file and function to sets the file name
 var storage = multer.diskStorage({
   destination: 'uploads/profile-images',
   filename: function (req, file, cb) {
+		var id = mongoose.Types.ObjectId(req.user._id);
 		/*Add user id instead of fieldname so that there will be one file per user*/
-    cb(null, file.fieldname +'.jpg');
+    cb(null, file.fieldname + id +'.jpg');
   }
 });
 
@@ -60,18 +61,26 @@ router.post('/profile',function(req,res){
 			if(!req.file){
 				res.json({
 					status: 1,
-					message:"No file provided"
+					message:"No file provided!"
 				});
 			} else{
 				userService.getFileUploadURI(req).then(function(fullURL){
-					res.json({
-						status: 3,
-						message:"Image uploaded successfully!",
-						imageURL: fullURL
+					var updateObject = {};
+					updateObject.profileImage = fullURL;
+					var id = mongoose.Types.ObjectId(req.user._id);
+
+					userService.update(id,updateObject).then(function(user){
+						res.json({
+							status: 3,
+							message:"Image uploaded successfully!",
+							imageURL: user.profileImage
+						});
+					}).catch(function(error){
+						res.send(error);
 					});
 				});
 			}
-			
+
 		}
 
   })

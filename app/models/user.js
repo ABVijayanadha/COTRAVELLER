@@ -10,6 +10,7 @@ var UserSchema = new Schema({
 	lastName:{
 		type:String
 	},
+	profileImage : {type: String},
 	email:  {
         type: String,
         required: true,
@@ -17,8 +18,8 @@ var UserSchema = new Schema({
     },
 	hashed_password: String,
 	salt: { type: String },
-    hash: { type: String },
-		profileImage : {type: String}
+    hash: { type: String }
+
 });
 
 
